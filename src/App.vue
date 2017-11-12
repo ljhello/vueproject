@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <mt-header fixed title="小熊看世界"></mt-header>
+		
     <router-view id="toggle"></router-view>
 
 
