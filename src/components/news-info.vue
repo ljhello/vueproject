@@ -10,11 +10,16 @@
     <div id="content" v-html="msg.content">
 
     </div>
+    <comment :id='id'></comment>
   </div>
 </template>
 <script>
+import comment from './comment.vue'
 import common from '../kits/common.js'
 export default {
+    components:{
+      comment
+    },
   data:function(){
       return {
           id:0,

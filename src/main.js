@@ -5,6 +5,8 @@ import Router from 'vue-router'
 import mintUi from 'mint-ui';
 import vueResource from 'vue-resource';
 import moment from 'moment';
+import VuePreview from 'vue-preview'
+
 
 import App from './App'
 // import router from './router'
@@ -17,12 +19,15 @@ import  home from './components/home.vue'
 import shopcar from './components/shopcar.vue'
 import newslist from './components/news-list.vue'
 import newsinfo from './components/news-info.vue'
+import picturelist from './components/picture.vue'
+import picturein from './components/pircturein.vue'
+import productlist from './components/productlist.vue'
+import productdesc from './components/productdesc.vue'
 
-
-Vue.use(mintUi)
-Vue.use(Router)
+Vue.use(mintUi);
+Vue.use(Router);
 Vue.use(vueResource);
-
+Vue.use(VuePreview)
 
 Vue.filter('datafmt',function(input,fmtgeshihua){
     return moment(input).format(fmtgeshihua);
@@ -51,11 +56,27 @@ var router=new Router({
     {
       path:'/news/newsinfo/:id',
       component:newsinfo
+    },
+    {
+      path:'/photo/photolist',
+      component:picturelist
+    },
+    {
+      path:'/photos/photolistin/:cateid',
+      component:picturein
+    },
+    {
+      path:'/product/productslist',
+      component:productlist
+    },
+    {
+      path:'/prodtct/prodesc/:id',
+      component:productdesc
     }
   ]
 })
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
