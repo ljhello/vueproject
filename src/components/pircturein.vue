@@ -61,8 +61,11 @@ export default {
                res.body.message.forEach(function(item){
                    var img=document.createElement('img');
                    img.src=item.src;
-                   item.h=img.height;
-                   item.w=img.width;
+                   img.onload=function(){
+                    item.h=img.height;
+                    item.w=img.width;
+                   }
+                  
                })
 
 

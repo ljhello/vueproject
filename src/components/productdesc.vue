@@ -10,8 +10,8 @@
         <li>
             市场价：<s>￥{{info.market_price}}</s>  销售价：<span>￥{{info.sell_price}}</span>
         </li>
-        <li>
-            购买数量：
+        <li class="rela">
+            购买数量：<shopcarcount class="shopcou" v-on:contobj="getcount"></shopcarcount>
         </li>
         <li>
            <mt-button type="primary" size="small">立即购买</mt-button>
@@ -29,17 +29,24 @@
       </ul>
    </div>
     <div>
+       <router-link :to="'/picture/introducepic/'+id">
         <mt-button class="btn" type="primary" size="large" plaint>图文介绍</mt-button>
+       </router-link>
+
+       <router-link :to="'/product/productcomm/'+id">
         <mt-button type="danger" size="large" plain>商品评论</mt-button> 
+       </router-link>
     </div>
   </div>
 </template>
 <script>
 import common from '../kits/common.js'
 import slider from './slider.vue'
+import shopcarcount from './shopcarcount.vue'
 export default {
     components:{
-        slider
+        slider,
+        shopcarcount
     },
    data:function(){
        return {
@@ -48,7 +55,8 @@ export default {
                {img:'http://img5.gomein.net.cn/image/prodimg/productDesc/descImg/201503/desc1226/1122290268/1_07.jpg'}
            ],
            id:0,
-           info:{}
+           info:{},
+           inputcount:1
        }
    },
    created:function(){
@@ -69,6 +77,10 @@ export default {
            this.$http.get(url).then(function(res){
              this.info=res.body.message[0];
            })
+       },
+       getcount:function(count){
+           this.inputcount=count;
+           console.log(count);
        }
    }
 }
@@ -90,7 +102,7 @@ export default {
 }
 .contentbuy ul li,.productcs ul li{
     list-style: none;
-    padding: 5px 0px;
+    padding: 8px 0px;
 }
 .contentbuy ul,.productcs ul{
     padding: 5px;
@@ -104,5 +116,13 @@ export default {
 }
 .btn{
     margin: 8px 0px;
+}
+.rela{
+    position: relative;
+}
+.shopcou{
+    position: absolute;
+    top: 3px;
+    left: 100px;
 }
 </style>

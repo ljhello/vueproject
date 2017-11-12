@@ -23,6 +23,8 @@ import picturelist from './components/picture.vue'
 import picturein from './components/pircturein.vue'
 import productlist from './components/productlist.vue'
 import productdesc from './components/productdesc.vue'
+import introducepic from './components/introducepro.vue'
+import prodctcomm from './components/prodcomment.vue'
 
 Vue.use(mintUi);
 Vue.use(Router);
@@ -72,6 +74,14 @@ var router=new Router({
     {
       path:'/prodtct/prodesc/:id',
       component:productdesc
+    },
+    {
+      path:'/picture/introducepic/:id',
+      component:introducepic
+    },
+    {
+      path:'/product/productcomm/:id',
+      component:prodctcomm
     }
   ]
 })

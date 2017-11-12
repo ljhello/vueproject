@@ -21,7 +21,8 @@
                         
                 </li>
 		        
-		    </ul>    
+		    </ul>  
+            <mt-button type="danger" size="large" plain @click="getmore">加载更多</mt-button>  
 		</div>
   </div>
 </template>
@@ -30,7 +31,8 @@ import common from '../kits/common.js'
 export default {
     data:function(){
         return {
-            list:[]
+            list:[],
+            catesid:1
         }
     },
     created:function(){
@@ -38,10 +40,15 @@ export default {
     },
     methods:{
         getlist:function(){
-            var url=common.apicommon+'/api/getgoods?pageindex=1';
+            var url=common.apicommon+'/api/getgoods?pageindex='+this.catesid;
             this.$http.get(url).then(function(res){
-                this.list=res.body.message;
+                this.list=this.list.concat(res.body.message);
             })
+        },
+        getmore:function(){
+          this.catesid++;
+          this.getlist();
+
         }
     }
 };
