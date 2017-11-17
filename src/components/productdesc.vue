@@ -12,10 +12,14 @@
         </li>
         <li class="rela">
             购买数量：<shopcarcount class="shopcou" v-on:contobj="getcount"></shopcarcount>
+
+            <transition name="show" @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+            <div class="ball" v-if="isshow"></div>
+            </transition>
         </li>
         <li>
            <mt-button type="primary" size="small">立即购买</mt-button>
-           <mt-button type="danger" size="small">加入购物车</mt-button>
+           <mt-button type="danger" size="small" @click="showcount()">加入购物车</mt-button>
         </li>
     </ul>
   </div>
@@ -40,9 +44,11 @@
   </div>
 </template>
 <script>
+import {setItem} from '../kits/localStr.js'
 import common from '../kits/common.js'
 import slider from './slider.vue'
 import shopcarcount from './shopcarcount.vue'
+import vm from '../kits/vm.js'
 export default {
     components:{
         slider,
@@ -51,25 +57,27 @@ export default {
    data:function(){
        return {
            imgs:[
-               {img:'http://img5.gomein.net.cn/image/bbcimg/productDesc/descImg/201503/desc04/A0004794664/3997361.jpg'},
-               {img:'http://img5.gomein.net.cn/image/prodimg/productDesc/descImg/201503/desc1226/1122290268/1_07.jpg'}
+              
            ],
            id:0,
            info:{},
-           inputcount:1
+           inputcount:1,
+           isshow:false
        }
    },
    created:function(){
        this.id=this.$route.params.id;
        this.getimgs();
        this.getprodesc();
+       
    },
    methods:{
        getimgs:function(){
            var url=common.apicommon+'/api/getthumimages/'+this.id;
         this.$http.get(url).then(function(res){
-            console.log(res.body);
+            
             this.imgs=res.body.message;
+
         })
        },
        getprodesc:function(){
@@ -79,8 +87,23 @@ export default {
            })
        },
        getcount:function(count){
-           this.inputcount=count;
-           console.log(count);
+           this.inputcount=count; 
+       },
+       showcount:function(){
+         vm.vm.$emit('countstr',this.inputcount);
+         setItem({goodsid:this.id,numval:this.inputcount});
+         this.isshow=!this.isshow;
+       },
+       beforeEnter:function(el){
+         el.style.transform="translate(0px,0px)"
+       },
+       enter:function(el,done){
+         el.offsetWidth;
+         el.style.transform="translate(75px,375px)"
+         done();
+       },
+       afterEnter:function(el){
+        this.isshow=!this.isshow;
        }
    }
 }
@@ -124,5 +147,16 @@ export default {
     position: absolute;
     top: 3px;
     left: 100px;
+}
+.ball{
+    height: 20px;
+    width: 20px;
+    background: red;
+    border-radius: 50%;
+    position: absolute;
+   left: 150px;
+   top: 6px;
+   z-index: 100;
+   transition: all 0.4s ease;
 }
 </style>

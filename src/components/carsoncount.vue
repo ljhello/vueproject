@@ -7,15 +7,20 @@
 </template>
 <script>
 export default {
+    props:['initcount','goodsid'],
   data:function(){
       return {
-          count:1
+          count:1,
+          resobj:{goodsid:0,type:app}
       }
+  },
+  created:function(){
+   this.count=this.initcount;
   },
   methods:{
       add:function(){
           this.count++;
-          this.setcount()
+          this.setcount("add")
       },
       reduce:function(){
           if(this.count<=1){
@@ -23,10 +28,12 @@ export default {
               return;
           }
           this.count--;
-          this.setcount()
+          this.setcount("jjdd")
       },
-      setcount:function(){
-          this.$emit('contobj',this.count);
+      setcount:function(type){
+          this.resobj.type=type;
+          this.resobj.goodsid=this.goodsid;
+          this.$emit('carcontobj',this.resobj);
       }
   }
 }
